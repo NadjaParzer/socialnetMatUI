@@ -25,8 +25,11 @@ export const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(6),
     marginTop:theme.spacing(8)
   },
+  mainContent:{},
   navbar: {
-    marginTop: theme.spacing(4),
     flexGrow:6
+  },
+  footer: {
+    backgroundColor:"#117B80",
   }
 })) 

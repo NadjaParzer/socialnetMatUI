@@ -30,7 +30,6 @@ export function Header () {
             </Container>
           </AppBar>
 
-          <main>
             <Paper className={s.mainFeaturesPost} style={{ backgroundImage: `url(https://source.unsplash.com/random)` }}>
               <Container fixed>
                 <Grid container>
@@ -44,6 +43,6 @@ export function Header () {
                 </Grid>
               </Container>
             </Paper>
-          </main>
+      
     </div>)
 }
