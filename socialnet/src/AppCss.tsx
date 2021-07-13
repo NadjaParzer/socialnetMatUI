@@ -2,7 +2,10 @@ import {makeStyles} from '@material-ui/core/styles';
 
 
 export const useStyles = makeStyles((theme) => ({
-  root: {flexGrow:1},
+  
+  root: {
+   flexGrow:1,
+  },
   menuButton: {
     marginRight: theme.spacing(1)
   },
@@ -31,5 +34,14 @@ export const useStyles = makeStyles((theme) => ({
   },
   footer: {
     backgroundColor:"#117B80",
+    marginTop: "740px",
+  },
+  avatarLarge:{
+    width:theme.spacing(25),
+    height:theme.spacing(25),
+  },
+  newPost: {
+    width:"80%",
+    height:50
   }
 })) 

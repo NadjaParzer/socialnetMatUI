@@ -12,7 +12,7 @@ export function Header () {
     const s = useStyles()
     return (<div>
          <AppBar position="fixed" className={s.toolbar}>
-            <Container fixed>
+            <Container maxWidth="xl">
               <Toolbar  >
                 <IconButton edge="start" color="inherit"
                   aria-label="menu" className={s.menuButton}>
@@ -31,7 +31,7 @@ export function Header () {
           </AppBar>
 
             <Paper className={s.mainFeaturesPost} style={{ backgroundImage: `url(https://source.unsplash.com/random)` }}>
-              <Container fixed>
+              <Container maxWidth="xl">
                 <Grid container>
                   <Grid item md={6}>
                     <div className={s.mainFeaturesPostContent}>

@@ -14,19 +14,12 @@ type FooterType = {
 export function Footer (props:FooterType) {
     const s = useStyles()
      
-    return (<div className={s.footer} style={{backgroundColor:"greenyellow"}}>
-
-    
-        <footer>
-           
-            <BottomNavigation value={props.value} onChange={props.handleChange}
-            className={s.root} >
+    return (
+            <BottomNavigation className={[s.footer, s.root].join(" ")} value={props.value} onChange={props.handleChange}>
                 <BottomNavigationAction label="Recents" value="recents" icon={<RestoreIcon/>} />
                 <BottomNavigationAction label="Favorites" value="favorites" icon={<FavoriteIcon/>} />
                 <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon/>} />
                 <BottomNavigationAction label="NearBy" value="nearby" icon={<LocationOnIcon/>} />
             </BottomNavigation>
-        </footer>
-        </div>
     )
 }
