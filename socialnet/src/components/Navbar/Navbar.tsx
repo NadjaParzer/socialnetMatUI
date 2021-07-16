@@ -15,7 +15,6 @@ export function Navbar() {
                 {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                     <ListItem button key={text}>
                         <ListItemText primary={text} />
-
                     </ListItem>
                 ))}
             </List>

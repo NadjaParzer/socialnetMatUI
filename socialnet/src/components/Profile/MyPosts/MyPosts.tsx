@@ -1,23 +1,24 @@
 import { TextareaAutosize, Button, Grid, Typography } from '@material-ui/core';
 import {useStyles} from '../../../AppCss';
+import { Post } from './Post/Post';
 
 export function MyPosts() {
     const s = useStyles()
     return (
-        <div>
+        <Grid container>
+            <Grid item xs={10}>
             <Typography variant="h4" gutterBottom>My Posts</Typography>
-
-            <Grid container spacing={5} justify="center">
-                <Grid item xs={8}>
-                    <TextareaAutosize className={s.newPost} rows={8} aria-label="maximum height" placeholder="..." />
-                </Grid>
-                <Grid item xs={4}>
-                    <Button variant="outlined" color="primary">Add Post</Button>
-                </Grid>
-
-
+            <div className={s.marginBottom}>
+                    <TextareaAutosize className={s.newPost} rows={8} aria-label="maximum height" placeholder="..." />  
+                <div >
+                    <Button className={s.btnPost} variant="outlined" color="primary">Add Post</Button>
+                </div>
+            </div>
+            <div >
+                <Post  title="Post 1" message= "My first Post"/>
+                <Post  title="Post 2" message= "My 2nd Post"/>
+            </div>
             </Grid>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi quis vitae totam omnis, corrupti minima ut expedita dignissimos non incidunt voluptate sint. Quibusdam repudiandae, repellendus ut consequatur dolorum deserunt. Nisi.
-        </div>
+        </Grid>
     )
 }

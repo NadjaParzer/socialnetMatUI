@@ -1,8 +1,9 @@
 import React from "react";
 import { Container, Grid, AppBar, Toolbar, IconButton, Typography,
-    Button, Box, Paper} from '@material-ui/core';
+    Button, Box, Paper,Link} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import {useStyles} from '../../AppCss';
+import { NavLink } from "react-router-dom";
 
 type HeaderProps = {
 
@@ -18,9 +19,9 @@ export function Header () {
                   aria-label="menu" className={s.menuButton}>
                   <MenuIcon />
                 </IconButton>
-                <Typography className={s.title} >Profile</Typography>
-                <Typography className={s.title}>Messages</Typography>
-                <Typography className={s.title}>News</Typography>
+                <Typography className={s.title}><NavLink className={s.navLink} to="/profile">Profile</NavLink></Typography>
+                <Typography className={s.title}><NavLink className={s.navLink} to="/dialogs">Dialogs</NavLink></Typography>
+                <Typography className={s.title}><NavLink className={s.navLink} to="/news">News</NavLink></Typography>
                 <Typography className={s.title}>Settings</Typography>
                 <Box mr={3}>
                   <Button color="inherit" variant="outlined">Log In</Button>
