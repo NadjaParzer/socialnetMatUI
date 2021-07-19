@@ -1,15 +1,24 @@
 import React from 'react';
-import { Avatar, Button, Container, Grid, Typography } from "@material-ui/core";
 import {useStyles} from '../../AppCss';
-import { MyPosts } from './MyPosts/MyPosts';
+import { MyPosts, PostType, } from './MyPosts/MyPosts';
 import { ProfileInfo } from './ProfileInfo';
 
-export function Profile () {
+type ProfileType = {
+    posts: Array<PostType>,
+    addPost: ()=> void,
+    newPostText:string,
+    updateNewPostText: (text:string)=>void
+}
+
+
+export function Profile (props:ProfileType) {
+
+  
     const s = useStyles()
     return (
         <div>
         <ProfileInfo/>
-        <MyPosts/>
+        <MyPosts posts = {props.posts} newPostText={props.newPostText} updateNewPostText={props.updateNewPostText} addPost={props.addPost} />
         </div>
     )
 }

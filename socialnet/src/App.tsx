@@ -3,13 +3,17 @@ import { Header } from './components/Header/Header';
 import { Navbar } from './components/Navbar/Navbar';
 import { Profile } from './components/Profile/Profile';
 import {useStyles} from './AppCss';
-import { Button, Container, Grid, Typography } from "@material-ui/core";
+import { Container, Grid,} from "@material-ui/core";
 import { Footer } from "./components/Footer/Footer";
 import Divider from '@material-ui/core/Divider';
 import { Dialogs } from "./components/Dialogs/Dialogs";
+import state, { updateNewPostText } from './redux/state';
+import { addPost } from "./redux/state";
+
 
 function App() {
   const s = useStyles()
+
   return (
     <Router>
       <Header />
@@ -20,8 +24,10 @@ function App() {
             <Divider orientation="vertical" flexItem />
           </Grid>
           <Grid item xs={10}>
-              <Route path="/profile" render={()=> <Profile/>}/>
-              <Route path="/dialogs" render={()=> <Dialogs/>}/> 
+              <Route path="/profile" render={()=> <Profile addPost={addPost} newPostText={state.profilePage.newPostText}
+               posts={state.profilePage.posts} updateNewPostText={updateNewPostText}/>}/>
+              <Route path="/dialogs" render={()=> <Dialogs dialogs={state.dialogsPage.dialogs}
+               messages={state.dialogsPage.messages}/>}/> 
           </Grid>
         </Grid>
       </Container>
@@ -31,11 +37,3 @@ function App() {
 }
 
 export default App;
-
-{/*<Container maxWidth="md">
-            <Typography variant="h2" color="textPrimary" gutterBottom
-              align="center">hffrufherhjfrjf jhfigjiregj</Typography>
-            <Typography variant="h5" color="textSecondary" paragraph align="center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus sapiente maiores quas, corrupti accusantium provident possimus ipsa eum? A distinctio nostrum quasi repellat voluptatibus ex veritatis illo aliquam doloribus at!</Typography>
-            </Container>
-             <Button variant="outlined" color="primary">Learn More</Button>
-              <Button variant="contained" color="primary">Start Now</Button> */}

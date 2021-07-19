@@ -1,17 +1,16 @@
 import React from "react";
-import {Avatar, Button, Container, Grid, Typography,List,ListItem,ListItemAvatar,ListItemText } from "@material-ui/core";
+import {Avatar,ListItem,ListItemAvatar,ListItemText } from "@material-ui/core";
 import {useStyles} from '../../AppCss';
 import { NavLink } from "react-router-dom";
 import PersonIcon from '@material-ui/icons/Person';
 
-type DialogItemprops = {
+export type DialogType = {
     name: string,
     id: number,
-    lastMessage: string
+    message?: string
 }
 
-
-export const DialogItem = (props: DialogItemprops) => {
+export const DialogItem = (props: DialogType) => {
     const s = useStyles()
     return (
         <ListItem>
@@ -19,7 +18,7 @@ export const DialogItem = (props: DialogItemprops) => {
                 <Avatar><PersonIcon /></Avatar>
             </ListItemAvatar>
             <ListItemText ><NavLink className={s.navLinkDialogs} to={"/dialods/" + props.id}>{props.name}
-            <span className={s.lastMessage}>{props.lastMessage}</span></NavLink></ListItemText>
+            <span className={s.lastMessage}>{props.message}</span></NavLink></ListItemText>
         </ListItem>
     )
 }
