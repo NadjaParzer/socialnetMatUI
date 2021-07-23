@@ -9,6 +9,7 @@ import Divider from '@material-ui/core/Divider';
 import { Dialogs } from "./components/Dialogs/Dialogs";
 import state, { updateNewPostText } from './redux/state';
 import { addPost } from "./redux/state";
+import { LineChart } from "./components/Charts/Chart";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
                posts={state.profilePage.posts} updateNewPostText={updateNewPostText}/>}/>
               <Route path="/dialogs" render={()=> <Dialogs dialogs={state.dialogsPage.dialogs}
                messages={state.dialogsPage.messages}/>}/> 
+               <Route path="/charts" render={()=> <LineChart/>}/> 
           </Grid>
         </Grid>
       </Container>

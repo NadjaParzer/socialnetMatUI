@@ -17,7 +17,6 @@ type MyPostType = {
     updateNewPostText:(newText:string)=> void
 }
 
-
 export function MyPosts(props:MyPostType) {
     const s = useStyles()
 
@@ -36,6 +35,9 @@ export function MyPosts(props:MyPostType) {
             <Grid item xs={10}>
             <Typography variant="h4" gutterBottom>My Posts</Typography>
             <div className={s.marginBottom}>
+                <div>
+                  <input id="file-input" type="file" name="file" multiple/>  
+                </div>
                     <TextareaAutosize onChange={onChangeText} value={props.newPostText} className={s.newPost} rows={8} aria-label="maximum height" placeholder="..." />  
                 <div >
                     <Button onClick = {addPost} className={s.btnPost} variant="outlined" color="primary">Add Post</Button>
