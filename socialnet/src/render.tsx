@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { RootStateType } from './redux/state';
+import  store from './redux/state';
 
 
-export const renderTree = (state: RootStateType) => {
+export const renderTree = () => {
   ReactDOM.render(
     <React.StrictMode>
-      <App />
+      <App store={store} />
     </React.StrictMode>,
     document.getElementById('root')
   );

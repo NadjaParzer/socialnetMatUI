@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import state, { RootStateType } from './redux/state';
 import {renderTree} from './render'
+import store from './redux/state'
 
+store.subscribe(renderTree)
+renderTree()
 
-
-renderTree(state)
+//renderTree(state)
 
 
 
