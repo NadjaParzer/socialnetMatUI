@@ -35,8 +35,19 @@ export type StoreType = {
     _onChange:()=> void,
     subscribe:(callback:()=>void)=>void,
     getState:()=>RootStateType,
-    //dispatch: (action: any) => void
+    dispatch: (action:AddPostActionType | UpdateNewTextActionType ) => void
 }
+
+type AddPostActionType = {
+    type: 'ADD_POST',
+}
+
+type UpdateNewTextActionType = {
+    type: 'UPDATE_NEW_POST_TEXT',
+    newText: string
+}
+
+export type ActionTypes =  AddPostActionType | UpdateNewTextActionType
 
 const store: StoreType = {
     _state: {
@@ -99,7 +110,22 @@ const store: StoreType = {
         this._state.profilePage.newPostText = ""
         this._onChange()
     },
-
+    dispatch(action) {
+        if (action.type === 'ADD_POST') {
+            let newPost: PostType = {
+                id: new Date().getTime(),
+                message: this._state.profilePage.newPostText,
+                likesCount: 0,
+                title: ""
+            }
+            this._state.profilePage.posts.unshift(newPost)
+            this._state.profilePage.newPostText = ""
+            this._onChange()
+        } else if (action.type === 'UPDATE_NEW_POST_TEXT') {
+            this._state.profilePage.newPostText = action.newText
+            this._onChange()
+        }
+    }
 }
 
 export default store;

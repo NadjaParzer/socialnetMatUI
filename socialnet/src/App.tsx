@@ -30,9 +30,9 @@ const App:React.FC<AppType> = (props) => {
             <Divider orientation="vertical" flexItem />
           </Grid>
           <Grid item xs={10}>
-              <Route path="/profile" render={()=> <Profile addPost={props.store.addPost.bind(props.store)}
+              <Route path="/profile" render={()=> <Profile dispatch={props.store.dispatch.bind(props.store)}
                newPostText={state.profilePage.newPostText}
-               posts={state.profilePage.posts} updateNewPostText={props.store.updateNewPostText.bind(props.store)}/>}/>
+               posts={state.profilePage.posts}/>}/>
               <Route path="/dialogs" render={()=> <Dialogs dialogs={state.dialogsPage.dialogs}
                messages={state.dialogsPage.messages}/>}/> 
                <Route path="/charts" render={()=> <LineChart/>}/> 
