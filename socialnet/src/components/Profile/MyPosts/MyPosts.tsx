@@ -3,7 +3,6 @@ import { TextareaAutosize, Button, Grid, Typography } from '@material-ui/core';
 import {useStyles} from '../../../AppCss';
 import { Post } from './Post/Post';
 import { ChangeEvent } from 'react';
-import { ActionTypes } from '../../../redux/state';
 
 export type PostType = {
     id:number,
@@ -14,7 +13,8 @@ export type PostType = {
 type MyPostType = {
     posts: Array<PostType>,
     newPostText:string,
-    dispatch:(action: ActionTypes)=> void
+    updateNewPostText: (text: string) => void
+    addPost: () => void
 }
 
 export function MyPosts(props:MyPostType) {
@@ -23,11 +23,12 @@ export function MyPosts(props:MyPostType) {
     let postsElements = props.posts.map(p => <Post key={p.id} title={p.title} message={p.message}/>)
 
     const addPost = () => {
-       props.dispatch({type: 'ADD_POST'})
+       props.addPost()
     }
 
     const onChangeText = (event:ChangeEvent<HTMLTextAreaElement>)=> {
-        props.dispatch({type:'UPDATE_NEW_POST_TEXT', newText: event.currentTarget.value})
+        let text = event.currentTarget.value
+        props.updateNewPostText(text)
     }
 
     return (

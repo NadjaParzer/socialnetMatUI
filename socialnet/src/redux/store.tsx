@@ -1,26 +1,29 @@
 import { renderTree } from "../render"
+import { dialogsReducer, sendMessageActionCreator, updateNewMessageTextActionCreator } from "./dialogs-reducer"
+import { addPostActionCreator, profileReducer, updateNewTextActionCreator } from "./profile-reducer"
 
 type MessageType = {
     id: number,
     message: string
 }
-type DialogType = {
+export type DialogType = {
     id: number,
     name: string
 }
-type PostType = {
+export type PostType = {
     id:number,
     message:string,
     title: string,
     likesCount: number
 }
-type ProfilePageType = {
+export type ProfilePageType = {
     posts: Array<PostType>,
     newPostText:string
 }
-type DialogsPageType = {
+export type DialogsPageType = {
     messages: Array<MessageType>,
-    dialogs: Array<DialogType>
+    dialogs: Array<DialogType>,
+    newMessageText: string
 }
 export type RootStateType = {
     profilePage:ProfilePageType,
@@ -30,24 +33,17 @@ export type RootStateType = {
 
 export type StoreType = {
     _state: RootStateType,
-    updateNewPostText:(newText:string)=> void,
-    addPost:()=> void,
     _onChange:()=> void,
     subscribe:(callback:()=>void)=>void,
     getState:()=>RootStateType,
-    dispatch: (action:AddPostActionType | UpdateNewTextActionType ) => void
+    dispatch: (action:ActionTypes ) => void
 }
 
-type AddPostActionType = {
-    type: 'ADD_POST',
-}
+// type AddPostActionType = ReturnType<typeof addPostActionCreator>
+// type UpdateNewTextActionType = ReturnType<typeof updateNewTextActionCreator>
 
-type UpdateNewTextActionType = {
-    type: 'UPDATE_NEW_POST_TEXT',
-    newText: string
-}
-
-export type ActionTypes =  AddPostActionType | UpdateNewTextActionType
+export type ActionTypes =  ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewTextActionCreator> | 
+                           ReturnType<typeof updateNewMessageTextActionCreator> | ReturnType<typeof sendMessageActionCreator>
 
 const store: StoreType = {
     _state: {
@@ -73,6 +69,7 @@ const store: StoreType = {
                 { id: 6, message: "Who are you" },
                 { id: 7, message: "???" },
             ],
+            newMessageText: "",
             dialogs: [
                 { id: 1, name: "Anna" },
                 { id: 2, name: "Anton" },
@@ -87,46 +84,19 @@ const store: StoreType = {
     _onChange() {
         console.log('state changed')
     },
-
     subscribe(callback) {
         this._onChange = callback
     },
     getState() {
         return this._state
     },
-
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText
-        this._onChange()
-    },
-    addPost() {
-        let newPost: PostType = {
-            id: new Date().getTime(),
-            message: this._state.profilePage.newPostText,
-            likesCount: 0,
-            title: ""
-        }
-        this._state.profilePage.posts.unshift(newPost)
-        this._state.profilePage.newPostText = ""
-        this._onChange()
-    },
     dispatch(action) {
-        if (action.type === 'ADD_POST') {
-            let newPost: PostType = {
-                id: new Date().getTime(),
-                message: this._state.profilePage.newPostText,
-                likesCount: 0,
-                title: ""
-            }
-            this._state.profilePage.posts.unshift(newPost)
-            this._state.profilePage.newPostText = ""
-            this._onChange()
-        } else if (action.type === 'UPDATE_NEW_POST_TEXT') {
-            this._state.profilePage.newPostText = action.newText
-            this._onChange()
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._onChange()  
     }
 }
+
 
 export default store;
 

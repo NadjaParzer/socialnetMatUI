@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {renderTree} from './render'
-import store from './redux/state'
+import {store} from './redux/redux-store'
 
 store.subscribe(renderTree)
 renderTree()

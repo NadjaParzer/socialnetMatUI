@@ -1,7 +1,8 @@
 import React from 'react';
 import {useStyles} from '../../AppCss';
-import { ActionTypes } from '../../redux/state';
-import { MyPosts, PostType, } from './MyPosts/MyPosts';
+import { ActionTypes } from '../../redux/store';
+import { PostType, } from './MyPosts/MyPosts';
+import { MyPostsContainer } from './MyPosts/MyPostsContainer';
 import CustomizedDialogs from './MyPosts/Post/MyPostMatUI';
 import { ProfileInfo } from './ProfileInfo';
 
@@ -19,7 +20,7 @@ export function Profile (props:ProfileType) {
     return (
         <div>
         <ProfileInfo/>
-        <MyPosts posts = {props.posts} newPostText={props.newPostText} dispatch={props.dispatch} />
+        <MyPostsContainer posts = {props.posts} newPostText={props.newPostText} dispatch={props.dispatch} />
         <CustomizedDialogs/>
         </div>
     )
