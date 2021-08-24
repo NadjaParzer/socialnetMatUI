@@ -6,21 +6,21 @@ import {useStyles} from './AppCss';
 import { Container, Grid,} from "@material-ui/core";
 import { Footer } from "./components/Footer/Footer";
 import Divider from '@material-ui/core/Divider';
-//import state, { updateNewPostText } from './redux/state';
-import { StoreType } from "./redux/store";
 import { LineChart } from "./components/Charts/Chart";
 import { DialogsContainer } from "./components/Dialogs/DialogsContainer";
-import { ReduxStoreType } from "./redux/redux-store";
+import { AppStateType} from "./redux/redux-store";
+import { Dispatch } from "redux";
+import { Users } from "./components/Users/Users";
+
 
 type AppType= {
-  store:ReduxStoreType
+  state?: AppStateType;
+  dispatch?: Dispatch
 }
 
 
 const App:React.FC<AppType> = (props) => {
   const s = useStyles()
-
-  const state = props.store.getState()
 
   return (
     <Router>
@@ -32,13 +32,10 @@ const App:React.FC<AppType> = (props) => {
             <Divider orientation="vertical" flexItem />
           </Grid>
           <Grid item xs={10}>
-              <Route path="/profile" render={()=> <Profile dispatch={props.store.dispatch.bind(props.store)}
-               newPostText={state.profilePage.newPostText}
-               posts={state.profilePage.posts}/>}/>
-              <Route path="/dialogs" render={()=> <DialogsContainer dispatch={props.store.dispatch.bind(props.store)} 
-               dialogs={state.dialogsPage.dialogs} newMessageText={state.dialogsPage.newMessageText}
-               messages={state.dialogsPage.messages}/>}/> 
+              <Route path="/profile" render={()=> <Profile />}/>
+              <Route path="/dialogs" render={()=> <DialogsContainer />}/> 
                <Route path="/charts" render={()=> <LineChart/>}/> 
+               <Route path="/users" render={()=> <Users/>}/>
           </Grid>
         </Grid>
       </Container>
@@ -48,3 +45,11 @@ const App:React.FC<AppType> = (props) => {
 }
 
 export default App;
+
+//<DialogsContainer dispatch={props.dispatch} 
+//               dialogs={props.state.dialogsPage.dialogs} newMessageText={props.state.dialogsPage.newMessageText}
+//               messages={props.state.dialogsPage.messages}/>
+
+// <Profile dispatch={props.dispatch}
+//               newPostText={props.state.profilePage.newPostText}
+//               posts={props.state.profilePage.posts}/>

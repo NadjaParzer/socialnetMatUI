@@ -1,4 +1,3 @@
-import { renderTree } from "../render"
 import { dialogsReducer, sendMessageActionCreator, updateNewMessageTextActionCreator } from "./dialogs-reducer"
 import { addPostActionCreator, profileReducer, updateNewTextActionCreator } from "./profile-reducer"
 
@@ -6,21 +5,21 @@ type MessageType = {
     id: number,
     message: string
 }
-export type DialogType = {
+type DialogType = {
     id: number,
     name: string
 }
-export type PostType = {
+type PostType = {
     id:number,
     message:string,
     title: string,
     likesCount: number
 }
-export type ProfilePageType = {
+ type ProfilePageType = {
     posts: Array<PostType>,
     newPostText:string
 }
-export type DialogsPageType = {
+type DialogsPageType = {
     messages: Array<MessageType>,
     dialogs: Array<DialogType>,
     newMessageText: string
@@ -97,6 +96,4 @@ const store: StoreType = {
     }
 }
 
-
-export default store;
 

@@ -21,7 +21,7 @@ export function Header () {
                 </IconButton>
                 <Typography className={s.title}><NavLink className={s.navLink} to="/profile">Profile</NavLink></Typography>
                 <Typography className={s.title}><NavLink className={s.navLink} to="/dialogs">Dialogs</NavLink></Typography>
-                <Typography className={s.title}><NavLink className={s.navLink} to="/news">News</NavLink></Typography>
+                <Typography className={s.title}><NavLink className={s.navLink} to="/users">Users</NavLink></Typography>
                 <Typography className={s.title}>Settings</Typography>
                 <Box mr={3}>
                   <Button color="inherit" variant="outlined">Log In</Button>

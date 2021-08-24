@@ -1,4 +1,18 @@
-import { ActionTypes, DialogsPageType } from "./store";
+import { ActionTypes} from "./store";
+
+type MessageType = {
+    id: number,
+    message: string
+}
+export type DialogType = {
+    id: number,
+    name: string
+}
+export type DialogsPageType = {
+    messages: Array<MessageType>,
+    dialogs: Array<DialogType>,
+    newMessageText: string
+}
 
 let initialState: DialogsPageType = {
     messages: [
@@ -25,18 +39,22 @@ let initialState: DialogsPageType = {
 export const updateNewMessageTextActionCreator = (newMessageText: string) => ({type: 'UPDATE_NEW_MESSAGE_TEXT', newMessageText: newMessageText }) as const
 export const sendMessageActionCreator = () => ({type: 'SEND_MESSAGE'}) as const
 
-export const dialogsReducer = (dialogsPage: DialogsPageType = initialState, action: ActionTypes) => {
-
+export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionTypes): DialogsPageType => {
+    let stateCopy
     switch (action.type) {
         case 'UPDATE_NEW_MESSAGE_TEXT':
-            dialogsPage.newMessageText = action.newMessageText
-            return dialogsPage
+            return {
+                ...state,
+                newMessageText: action.newMessageText
+            }
         case 'SEND_MESSAGE':
-            let text = dialogsPage.newMessageText
-            dialogsPage.newMessageText = ''
-            dialogsPage.messages.push({ id: 8, message: text })
-            return dialogsPage
+            let text = state.newMessageText
+            return {
+                ...state,
+                newMessageText: '',
+                messages: [...state.messages, {id: 8, message: text}]
+            }
         default:
-            return dialogsPage
+            return state
     }
 }

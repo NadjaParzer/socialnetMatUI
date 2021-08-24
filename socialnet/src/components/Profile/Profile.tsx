@@ -5,11 +5,12 @@ import { PostType, } from './MyPosts/MyPosts';
 import { MyPostsContainer } from './MyPosts/MyPostsContainer';
 import CustomizedDialogs from './MyPosts/Post/MyPostMatUI';
 import { ProfileInfo } from './ProfileInfo';
+import { Dispatch } from "redux";
 
 type ProfileType = {
-    posts: Array<PostType>,
-    newPostText:string,
-    dispatch: (action: ActionTypes ) => void
+    posts?: Array<PostType>,
+    newPostText?:string,
+    dispatch?: Dispatch
 }
 
 
@@ -20,8 +21,10 @@ export function Profile (props:ProfileType) {
     return (
         <div>
         <ProfileInfo/>
-        <MyPostsContainer posts = {props.posts} newPostText={props.newPostText} dispatch={props.dispatch} />
+        <MyPostsContainer />
         <CustomizedDialogs/>
         </div>
     )
 }
+
+// <MyPostsContainer posts = {props.posts} newPostText={props.newPostText} dispatch={props.dispatch} />

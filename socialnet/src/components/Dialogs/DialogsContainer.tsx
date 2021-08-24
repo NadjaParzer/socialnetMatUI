@@ -1,13 +1,9 @@
 import React from "react";
-import { Grid, Typography,List, } from "@material-ui/core";
-import {useStyles} from '../../AppCss';
-import { DialogItem } from "./DialogItem";
-import { MessageItem, MessageType } from "./Message";
-import { DialogType } from "./DialogItem";
-import { ChangeEvent } from 'react';
-import { ActionTypes} from "../../redux/store";
-import { sendMessageActionCreator, updateNewMessageTextActionCreator } from "../../redux/dialogs-reducer";
+import { DialogsPageType, sendMessageActionCreator, updateNewMessageTextActionCreator } from "../../redux/dialogs-reducer";
 import { Dialogs } from "./Dialogs";
+import { Dispatch } from "redux";
+import { connect } from "react-redux";
+import { AppStateType } from "../../redux/redux-store";
 
 function generate(element: React.ReactElement) {
     return [0, 1, 2].map((value) =>
@@ -17,22 +13,33 @@ function generate(element: React.ReactElement) {
     );
   }
 
-type DialogsType = {
-    dialogs: Array<DialogType>,
-    newMessageText: string,
-    messages: Array<MessageType>,
-    dispatch:(action: ActionTypes)=> void
+//type DialogsType = {
+  //  dialogs?: Array<DialogType>,
+   // newMessageText?: string,
+   // messages?: Array<MessageType>,
+   // dispatch?:Dispatch
+//}
+
+type MapStatePropsType = {
+  dialogsPage: DialogsPageType
 }
 
-export const DialogsContainer = (props:DialogsType) => {
-    let onSendMessageClkick = () => props.dispatch(sendMessageActionCreator())
-    let onNewMessageChange = (text:string) => {
-        props.dispatch(updateNewMessageTextActionCreator(text))
-    }
-
-    const s = useStyles()
-    return (
-     <Dialogs onNewMessageChange={onNewMessageChange} onSendMessageClkick={onSendMessageClkick}
-      dialogs={props.dialogs} newMessageText={props.newMessageText} messages={props.messages}  />
-    )
+type MapDispatchToPropsType = {
+  onNewMessageChange: (text:string)=> void
+  onSendMessageClick:() => void
 }
+export type DialogsPagePropsType = MapStatePropsType & MapDispatchToPropsType
+
+let mapStateToProps = (state:AppStateType): MapStatePropsType => {
+  return {
+    dialogsPage: state.dialogsPage
+  }
+}
+
+let mapDispatchToProps = (dispatch:Dispatch): MapDispatchToPropsType => {
+  return {
+    onNewMessageChange: (text) => {dispatch(updateNewMessageTextActionCreator(text))},
+    onSendMessageClick: () => {dispatch(sendMessageActionCreator())}
+  }
+}
+export const DialogsContainer = connect(mapStateToProps,mapDispatchToProps)(Dialogs)

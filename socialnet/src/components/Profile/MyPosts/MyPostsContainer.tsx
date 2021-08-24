@@ -1,9 +1,12 @@
 import React from 'react';
 import {useStyles} from '../../../AppCss';
-import { Post } from './Post/Post';
 import { ActionTypes} from '../../../redux/store';
 import { addPostActionCreator, updateNewTextActionCreator } from '../../../redux/profile-reducer';
 import { MyPosts } from './MyPosts';
+import { StoreContext } from '../../../StoreContext';
+import { connect } from 'react-redux';
+import { AppStateType } from '../../../redux/redux-store';
+import { Dispatch } from 'redux';
 
 export type PostType = {
     id:number,
@@ -12,23 +15,27 @@ export type PostType = {
 }
 
 type MyPostType = {
-    posts: Array<PostType>,
-    newPostText:string,
-    dispatch:(action: ActionTypes)=> void
+    posts?: Array<PostType>,
+    newPostText?:string,
+    dispatch?:(action: ActionTypes)=> void
 }
 
-export function MyPostsContainer(props:MyPostType) {
-    const s = useStyles()
-
-    const addPost = () => {
-       props.dispatch(addPostActionCreator())
+const mapStateToProps = (state: AppStateType) => {
+    return {
+        posts: state.profilePage.posts,
+        newPostText: state.profilePage.newPostText
     }
-
-    const onChangeText = (text:string)=> {
-        props.dispatch(updateNewTextActionCreator(text))
-    }
-
-    return (
-        <MyPosts updateNewPostText={onChangeText} addPost={addPost} posts={props.posts} newPostText={props.newPostText} />
-    )
 }
+
+const mapDispatchToProps = (dispatch:Dispatch) => {
+    return {
+        updateNewPostText: (text: string) => {
+            dispatch(updateNewTextActionCreator(text))
+        },
+        addPost: () => {
+            dispatch(addPostActionCreator())
+        }
+    }
+}
+
+export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)

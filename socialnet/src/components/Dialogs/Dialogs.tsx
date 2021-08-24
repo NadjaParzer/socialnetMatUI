@@ -5,6 +5,9 @@ import { DialogItem } from "./DialogItem";
 import { MessageItem, MessageType } from "./Message";
 import { DialogType } from "./DialogItem";
 import { ChangeEvent } from 'react';
+import { DialogsPageType } from "../../redux/dialogs-reducer";
+import { DialogsPagePropsType } from "./DialogsContainer";
+
 
 function generate(element: React.ReactElement) {
     return [0, 1, 2].map((value) =>
@@ -14,20 +17,12 @@ function generate(element: React.ReactElement) {
     );
   }
 
-type DialogsType = {
-    dialogs: Array<DialogType>,
-    newMessageText: string,
-    messages: Array<MessageType>,
-    onNewMessageChange: (text:string) => void
-    onSendMessageClkick: () => void
-}
+export const Dialogs = (props:DialogsPagePropsType) => {
 
-export const Dialogs = (props:DialogsType) => {
-
-    let dialogsElements = props.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id} />)
-    let messagesElements = props.messages.map(m => <MessageItem key={m.id} id={m.id} message={m.message} />)
-    let newMessageText = props.newMessageText
-    let onSendMessageClkick = () => props.onSendMessageClkick
+    let dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id} />)
+    let messagesElements = props.dialogsPage.messages.map(m => <MessageItem key={m.id} id={m.id} message={m.message} />)
+    let newMessageText = props.dialogsPage.newMessageText
+    let onSendMessageClick = () => props.onSendMessageClick()
     let onNewMessageChange = (event:ChangeEvent<HTMLTextAreaElement>) => {
         let text = event.currentTarget.value
         props.onNewMessageChange(text)
@@ -46,7 +41,7 @@ export const Dialogs = (props:DialogsType) => {
             <Grid item xs={10}>
                 <div>{messagesElements}</div>
                 <div><textarea onChange={onNewMessageChange} value={newMessageText} placeholder="Enter your message" />
-                <button onClick={onSendMessageClkick}>Send</button></div>
+                <button onClick={onSendMessageClick}>Send</button></div>
             </Grid>
         </Grid>
 </div>
