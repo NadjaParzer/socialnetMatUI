@@ -35,7 +35,7 @@ const App:React.FC<AppType> = (props) => {
               <Route path="/profile" render={()=> <Profile />}/>
               <Route path="/dialogs" render={()=> <DialogsContainer />}/> 
                <Route path="/charts" render={()=> <LineChart/>}/> 
-               <Route path="/users" render={()=> <Users/>}/>
+               <Route path="/users" render={()=> <UsersContainer/>}/>
           </Grid>
         </Grid>
       </Container>
