@@ -10,7 +10,7 @@ import { LineChart } from "./components/Charts/Chart";
 import { DialogsContainer } from "./components/Dialogs/DialogsContainer";
 import { AppStateType} from "./redux/redux-store";
 import { Dispatch } from "redux";
-import { Users } from "./components/Users/Users";
+import {UsersContainer} from "./components/Users/UsersContainer";
 
 
 type AppType= {
@@ -34,8 +34,8 @@ const App:React.FC<AppType> = (props) => {
           <Grid item xs={10}>
               <Route path="/profile" render={()=> <Profile />}/>
               <Route path="/dialogs" render={()=> <DialogsContainer />}/> 
-               <Route path="/charts" render={()=> <LineChart/>}/> 
-               <Route path="/users" render={()=> <UsersContainer/>}/>
+              <Route path="/charts" render={()=> <LineChart/>}/> 
+              <Route path="/users" render={()=> <UsersContainer/>}/>
           </Grid>
         </Grid>
       </Container>

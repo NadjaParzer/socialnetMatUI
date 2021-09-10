@@ -3,9 +3,7 @@ import { Grid, Typography,List, } from "@material-ui/core";
 import {useStyles} from '../../AppCss';
 import { DialogItem } from "./DialogItem";
 import { MessageItem, MessageType } from "./Message";
-import { DialogType } from "./DialogItem";
 import { ChangeEvent } from 'react';
-import { DialogsPageType } from "../../redux/dialogs-reducer";
 import { DialogsPagePropsType } from "./DialogsContainer";
 
 
