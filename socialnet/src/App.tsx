@@ -21,6 +21,7 @@ type AppType= {
 
 const App:React.FC<AppType> = (props) => {
   const s = useStyles()
+  console.log('app')
 
   return (
     <Router>
