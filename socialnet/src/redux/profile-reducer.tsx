@@ -1,4 +1,3 @@
-import { ActionTypes } from "./store";
 
 type PostType = {
     id:number,
@@ -8,11 +7,16 @@ type PostType = {
 }
 export type ProfilePageType = {
     posts: Array<PostType>,
-    newPostText:string
+    newPostText:string,
+    profile: any,
 }
+
+export type ProfileActionType = ReturnType<typeof addPost> | ReturnType<typeof updateNewText> 
+                       | ReturnType<typeof setUserProfile> 
 
 let initialState: ProfilePageType = {
     newPostText: "Enter your text",
+    profile: null,
     posts: [
         { id: 1, message: "DADADADa", title: "Post #1", likesCount: 12 },
         { id: 2, message: "DADADADa", title: "Post #1", likesCount: 4 },
@@ -23,10 +27,11 @@ let initialState: ProfilePageType = {
     ]
 }
 
-export const addPostActionCreator = () => ({type: 'ADD_POST'}) as const
-export const updateNewTextActionCreator = (newText: string) => ({type: 'UPDATE_NEW_POST_TEXT',newText: newText}) as const
+export const addPost = () => ({type: 'ADD_POST'}) as const
+export const updateNewText = (newText: string) => ({type: 'UPDATE_NEW_POST_TEXT',newText: newText}) as const
+export const setUserProfile = (profile: any) => ({type: 'SET_USER_PROFILE', profile: profile}) as const
 
-export const profileReducer = (state: ProfilePageType = initialState, action: ActionTypes) => {
+export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionType): ProfilePageType => {
 
     switch (action.type) {
         case 'ADD_POST': 
@@ -45,6 +50,11 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
             return {
                 ...state,
                 newPostText: action.newText
+            }
+        case 'SET_USER_PROFILE':
+            return {
+                ...state,
+                profile: action.profile
             }
         default:
             return state

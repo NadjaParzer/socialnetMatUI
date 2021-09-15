@@ -1,4 +1,4 @@
-import { ActionTypes} from "./store";
+
 
 type MessageType = {
     id: number,
@@ -35,11 +35,12 @@ let initialState: DialogsPageType = {
         { id: 7, name: "Igor" },
     ],
 }
+export type DialogsActionType = ReturnType<typeof updateNewMessageTextActionCreator> | ReturnType<typeof sendMessageActionCreator> 
 
 export const updateNewMessageTextActionCreator = (newMessageText: string) => ({type: 'UPDATE_NEW_MESSAGE_TEXT', newMessageText: newMessageText }) as const
 export const sendMessageActionCreator = () => ({type: 'SEND_MESSAGE'}) as const
 
-export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionTypes): DialogsPageType => {
+export const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsActionType): DialogsPageType => {
     let stateCopy
     switch (action.type) {
         case 'UPDATE_NEW_MESSAGE_TEXT':

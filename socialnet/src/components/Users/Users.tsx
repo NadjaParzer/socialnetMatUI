@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import getInitials from '../../utils/getInitials'
 import { UsersPagePropsType } from './UsersContainer'
+import { Link, NavLink } from "react-router-dom";
 
 
 export let Users = (props: UsersPagePropsType) => {
@@ -26,8 +27,7 @@ export let Users = (props: UsersPagePropsType) => {
                     {`Amount of members: ${totalCount}`}
                 </Typography>
             </Card>
-                
-           
+            
             {props.users.map(u => <Card style={{ marginTop: '10px' }} key={u.id}>
 
                 <Grid container
@@ -35,12 +35,14 @@ export let Users = (props: UsersPagePropsType) => {
                     justifyContent='space-between'>
 
                     <Grid item>
-                        <Avatar src={u.photos.small != null ? u.photos?.small : ""}>
-                            {getInitials(u.name)}
-                        </Avatar>
-                        <Typography>
-                            {u.name}
-                        </Typography>
+                        <NavLink to={"/profile/" + u.id} ><div> HHHHHHHHH</div>
+                            <Avatar src={u.photos.small != null ? u.photos?.small : ""}>
+                                {getInitials(u.name)}
+                            </Avatar>
+                        </NavLink>
+                            <Typography>
+                                {u.name} 
+                            </Typography>
                         <Typography>
                             {`Location: `}
                         </Typography>
@@ -50,7 +52,7 @@ export let Users = (props: UsersPagePropsType) => {
                     </Grid>
                     <Grid item>
                         {u.followed
-                            ? <Button variant="contained" color="primary" onClick={() => { props.unFollow(u.id) }}>Unfollow</Button>
+                            ? <Button variant="contained" color="primary" onClick={() => { props.unfollow(u.id) }}>Unfollow</Button>
                             : <Button variant="contained" color="secondary" onClick={() => { props.follow(u.id) }}>Follow</Button>}
                         <Button>Send message</Button>
                     </Grid>

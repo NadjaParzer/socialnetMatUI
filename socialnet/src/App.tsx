@@ -1,7 +1,6 @@
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Header } from './components/Header/Header';
 import { Navbar } from './components/Navbar/Navbar';
-import { Profile } from './components/Profile/Profile';
 import {useStyles} from './AppCss';
 import { Container, Grid,} from "@material-ui/core";
 import { Footer } from "./components/Footer/Footer";
@@ -11,6 +10,7 @@ import { DialogsContainer } from "./components/Dialogs/DialogsContainer";
 import { AppStateType} from "./redux/redux-store";
 import { Dispatch } from "redux";
 import {UsersContainer} from "./components/Users/UsersContainer";
+import { ProfileContainer } from "./components/Profile/ProfileContainer";
 
 
 type AppType= {
@@ -33,7 +33,7 @@ const App:React.FC<AppType> = (props) => {
             <Divider orientation="vertical" flexItem />
           </Grid>
           <Grid item xs={10}>
-              <Route path="/profile" render={()=> <Profile />}/>
+              <Route path="/profile/:userId?" render={()=> <ProfileContainer />}/>
               <Route path="/dialogs" render={()=> <DialogsContainer />}/> 
               <Route path="/charts" render={()=> <LineChart/>}/> 
               <Route path="/users" render={()=> <UsersContainer/>}/>

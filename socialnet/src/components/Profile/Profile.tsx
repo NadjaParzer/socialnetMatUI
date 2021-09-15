@@ -1,6 +1,5 @@
 import React from 'react';
 import {useStyles} from '../../AppCss';
-import { ActionTypes } from '../../redux/store';
 import { PostType, } from './MyPosts/MyPosts';
 import { MyPostsContainer } from './MyPosts/MyPostsContainer';
 import CustomizedDialogs from './MyPosts/Post/MyPostMatUI';
@@ -10,7 +9,8 @@ import { Dispatch } from "redux";
 type ProfileType = {
     posts?: Array<PostType>,
     newPostText?:string,
-    dispatch?: Dispatch
+    dispatch?: Dispatch,
+    profile: any
 }
 
 
@@ -20,7 +20,7 @@ export function Profile (props:ProfileType) {
     const s = useStyles()
     return (
         <div>
-        <ProfileInfo/>
+        <ProfileInfo profile={props.profile}/>
         <MyPostsContainer />
         <CustomizedDialogs/>
         </div>
