@@ -1,3 +1,5 @@
+import { Dispatch } from "redux"
+import { usersAPI } from "../api/api"
 
 
 type LocationType = {
@@ -21,30 +23,22 @@ export type UsersPageType = {
     pageSize: number,
     totalUsersCount: number,
     currentPage: number,
-    isFetching: boolean
+    isFetching: boolean,
+    followingInProgress: Array<number>
 }
 
 type UsersActionType = ReturnType<typeof follow> | ReturnType<typeof unfollow> 
                        | ReturnType<typeof setUsers> | ReturnType<typeof setCurrentPage>
                        | ReturnType<typeof setUsersTotalCount> | ReturnType<typeof toggleIsFetching>
+                       | ReturnType<typeof toggleisFollowing>
 
 let initialState: UsersPageType = {
     users: [],
     pageSize:10,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching: false
-    // users: [
-    //     { id: 1, followed: true, fullName: "Nadja", status: "Search job", location: {city: 'SPb', country: 'Russia'} },
-    //     { id: 2,  followed: false,fullName: "Maria", status: "I am  a Boss", location: {city: 'Moskva', country: 'Russia'} },
-    //     { id: 3,  followed: false,fullName: "Pavel", status: "Search job", location: {city: 'Minsk', country: 'Belarus'} },
-    //     { id: 4,  followed: false,fullName: "Alex", status: "Search job", location: {city: 'Vienna', country: 'Austria'} },
-    //     { id: 5,  followed: true,fullName: "Anna", status: "Search job", location: {city: 'Berlin', country: 'Germany'} },
-    //     { id: 6,  followed: true,fullName: "Serg", status: "Search job", location: {city: 'Wyborg', country: 'Russia'} },
-    //     { id: 7,  followed: false,fullName: "Sofie", status: "Search job", location: {city: 'Kasan', country: 'Russia'} },
-    //     { id: 8,  followed: false,fullName: "Denis", status: "Search job", location: {city: 'London', country: 'UK'} },
-    //     { id: 9,  followed: true,fullName: "Leon", status: "Search job", location: {city: 'SPb', country: 'Russia'} },
-    // ]
+    isFetching: false,
+    followingInProgress: []
 }
 
 export const follow = (userID: number) => ({type: 'FOLLOW', userID}) as const
@@ -53,6 +47,39 @@ export const setUsers = (users: Array<UserType>) => ({type: 'SET_USERS', users})
 export const setCurrentPage = (currentPage:number) => ({type: 'SET_CURRENT_PAGE', currentPage}) as const
 export const setUsersTotalCount = (totalCount:number) => ({type: 'SET_USERS_TOTAL_COUNT', totalCount}) as const
 export const toggleIsFetching = (isFetching:boolean) => ({type: 'TOGGLE_IS_FETCHING', isFetching}) as const
+export const toggleisFollowing = (isFetching:boolean, userId: number) => ({type: 'TOGGLE_IS_FOLLOWING_PROGRESS', isFetching, userId}) as const
+
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+    return (dispatch: Dispatch) => {
+        dispatch(toggleIsFetching(true))
+            usersAPI.getUsers(currentPage, pageSize).then(response => {
+                dispatch(toggleIsFetching(false))
+                dispatch(setUsers(response.items))
+                dispatch(setUsersTotalCount(response.totalCount))
+            })
+    }
+}
+
+export const followThunk = (userId:number) => {
+    return (dispatch: Dispatch) => {
+        dispatch(toggleisFollowing(true, userId))
+                usersAPI.follow(userId)
+                  .then(res => {
+                    dispatch(follow(userId))
+                    dispatch(toggleisFollowing(false, userId))
+                  })
+    }
+}
+export const unfollowThunk = (userId:number) => {
+    return (dispatch: Dispatch) => {
+        dispatch(toggleisFollowing(true, userId))
+                usersAPI.unfollow(userId)
+                  .then(res => {
+                    dispatch(unfollow(userId))
+                    dispatch(toggleisFollowing(false, userId))
+                  })
+    }
+}
 
 export const usersReducer = (state: UsersPageType = initialState, action: UsersActionType): UsersPageType => {
     switch (action.type) {
@@ -93,6 +120,14 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersA
             return {
                 ...state,
                 isFetching: action.isFetching
+            }
+        case 'TOGGLE_IS_FOLLOWING_PROGRESS':
+            return {
+                ...state,
+                followingInProgress: action.isFetching 
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id != action.userId),
+
             }
         default:
             return state

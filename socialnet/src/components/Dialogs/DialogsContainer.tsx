@@ -21,7 +21,8 @@ function generate(element: React.ReactElement) {
 //}
 
 type MapStatePropsType = {
-  dialogsPage: DialogsPageType
+  dialogsPage: DialogsPageType,
+  isAuth: boolean
 }
 
 type MapDispatchToPropsType = {
@@ -32,7 +33,8 @@ export type DialogsPagePropsType = MapStatePropsType & MapDispatchToPropsType
 
 let mapStateToProps = (state:AppStateType): MapStatePropsType => {
   return {
-    dialogsPage: state.dialogsPage
+    dialogsPage: state.dialogsPage,
+    isAuth: state.auth.isAuth
   }
 }
 

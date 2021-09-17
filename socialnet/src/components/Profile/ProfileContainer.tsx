@@ -1,8 +1,7 @@
-import axios from 'axios';
 import React from 'react';
 import { connect } from "react-redux";
-import { RouteComponentProps, withRouter } from 'react-router';
-import { addPost,updateNewText, setUserProfile } from '../../redux/profile-reducer';
+import { Redirect, RouteComponentProps, withRouter } from 'react-router';
+import { addPost,updateNewText, getUserProfileThunk } from '../../redux/profile-reducer';
 import { AppStateType } from '../../redux/redux-store';
 import { PostType } from './MyPosts/MyPosts';
 import { Profile } from './Profile';
@@ -14,14 +13,15 @@ type PathParamsType = {
 type MapDispatchToPropsType = {
   addPost: () => void,
   updateNewText: (newText: string) => void,
-  setUserProfile: (profile: any) => void 
+  getUserProfileThunk: (userId: string) => void, 
 }
 type MapStatePropsType = {
   profile: any,
   posts: Array<PostType>,
-  newPostText: string
+  newPostText: string,
+  isAuth: boolean,
 }
-type ProfilePagePropsType = MapStatePropsType & MapDispatchToPropsType & OwnPropsType
+export type ProfilePagePropsType = MapStatePropsType & MapDispatchToPropsType & OwnPropsType
 type CommonPropsType = RouteComponentProps<PathParamsType> & ProfilePagePropsType 
 
 class ProfileAPI extends React.Component<CommonPropsType> {
@@ -30,14 +30,11 @@ class ProfileAPI extends React.Component<CommonPropsType> {
     if (!userId) {
       userId = '2'
     } 
-    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
-      .then(response => {
-        console.log(response)
-        this.props.setUserProfile(response.data)
-      }) 
+    this.props.getUserProfileThunk(userId)
   }
 
   render() {
+    if (this.props.isAuth === false) return <Redirect to={"/login"} />
     return (
       <>
         <Profile {...this.props} profile={this.props.profile}/>
@@ -46,12 +43,12 @@ class ProfileAPI extends React.Component<CommonPropsType> {
   }
 }
 
-
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
     profile: state.profilePage.profile,
     posts: state.profilePage.posts,
-    newPostText: state.profilePage.newPostText
+    newPostText: state.profilePage.newPostText,
+    isAuth: state.auth.isAuth
   } 
 }
 
@@ -59,5 +56,5 @@ let WithURLdataContainer = withRouter(ProfileAPI)
 export const ProfileContainer = connect<MapStatePropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
   addPost,
   updateNewText,
-  setUserProfile
+  getUserProfileThunk
 })(WithURLdataContainer)

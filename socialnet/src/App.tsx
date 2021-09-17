@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Header } from './components/Header/Header';
 import { Navbar } from './components/Navbar/Navbar';
 import {useStyles} from './AppCss';
 import { Container, Grid,} from "@material-ui/core";
@@ -11,6 +10,8 @@ import { AppStateType} from "./redux/redux-store";
 import { Dispatch } from "redux";
 import {UsersContainer} from "./components/Users/UsersContainer";
 import { ProfileContainer } from "./components/Profile/ProfileContainer";
+import { HeaderContainer } from "./components/Header/HeaderContainer";
+import { Login } from "./components/Login/Login";
 
 
 type AppType= {
@@ -25,7 +26,7 @@ const App:React.FC<AppType> = (props) => {
 
   return (
     <Router>
-      <Header />
+      <HeaderContainer />
       <Container maxWidth="xl" className={s.mainContent} >
         <Grid container spacing={5} justify="center" >
           <Grid item xs={2}>
@@ -37,6 +38,7 @@ const App:React.FC<AppType> = (props) => {
               <Route path="/dialogs" render={()=> <DialogsContainer />}/> 
               <Route path="/charts" render={()=> <LineChart/>}/> 
               <Route path="/users" render={()=> <UsersContainer/>}/>
+              <Route path="/login" render={()=> <Login />}/>
           </Grid>
         </Grid>
       </Container>

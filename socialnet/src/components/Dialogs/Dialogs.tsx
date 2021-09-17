@@ -2,9 +2,10 @@ import React from "react";
 import { Grid, Typography,List, } from "@material-ui/core";
 import {useStyles} from '../../AppCss';
 import { DialogItem } from "./DialogItem";
-import { MessageItem, MessageType } from "./Message";
+import { MessageItem} from "./Message";
 import { ChangeEvent } from 'react';
 import { DialogsPagePropsType } from "./DialogsContainer";
+import { Redirect } from "react-router";
 
 
 function generate(element: React.ReactElement) {
@@ -27,6 +28,8 @@ export const Dialogs = (props:DialogsPagePropsType) => {
     }
 
     const s = useStyles()
+    console.log(props.isAuth)
+    if (props.isAuth === false) return <Redirect to={"/login"} />
     return (
         <div>
             <Typography variant="h6" >Friends</Typography>

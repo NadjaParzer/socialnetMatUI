@@ -6,25 +6,33 @@ import {useStyles} from '../../AppCss';
 import { NavLink } from "react-router-dom";
 
 type HeaderProps = {
-
+ isAuth: boolean,
+ login: null | string,
+ userId: null | number
 }
 
-export function Header () {
+export function Header (props: HeaderProps) {
     const s = useStyles()
+    console.log('headerComp:' + props)
     return (<div>
          <AppBar position="fixed" className={s.toolbar}>
             <Container maxWidth="xl">
               <Toolbar  >
                 <IconButton edge="start" color="inherit"
                   aria-label="menu" className={s.menuButton}>
-                  <MenuIcon />
+                <MenuIcon />
                 </IconButton>
                 <Typography className={s.title}><NavLink className={s.navLink} to="/profile">Profile</NavLink></Typography>
                 <Typography className={s.title}><NavLink className={s.navLink} to="/dialogs">Dialogs</NavLink></Typography>
                 <Typography className={s.title}><NavLink className={s.navLink} to="/users">Users</NavLink></Typography>
                 <Typography className={s.title}>Settings</Typography>
                 <Box mr={3}>
-                  <Button color="inherit" variant="outlined">Log In</Button>
+                  { props.isAuth ? <NavLink style={{color: 'white', textDecoration: 'none'}} to={"/profile/" + props.userId}>{props.login}</NavLink> 
+                                 : <NavLink style={{color: 'white', textDecoration: 'none'}} to="/login">
+                                    <Button color="inherit" variant="outlined">Log In</Button>
+                                  </NavLink>
+                  }
+                  
                 </Box>
                 <Button color="secondary" variant="contained">Sign Up</Button>
               </Toolbar>
