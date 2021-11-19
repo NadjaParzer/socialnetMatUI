@@ -25,7 +25,7 @@ export function Header (props: HeaderProps) {
                 <Typography className={s.title}><NavLink className={s.navLink} to="/profile">Profile</NavLink></Typography>
                 <Typography className={s.title}><NavLink className={s.navLink} to="/dialogs">Dialogs</NavLink></Typography>
                 <Typography className={s.title}><NavLink className={s.navLink} to="/users">Users</NavLink></Typography>
-                <Typography className={s.title}>Settings</Typography>
+                <Typography className={s.title}><NavLink className={s.navLink} to="/settings">Settings</NavLink></Typography>
                 <Box mr={3}>
                   { props.isAuth ? <NavLink style={{color: 'white', textDecoration: 'none'}} to={"/profile/" + props.userId}>{props.login}</NavLink> 
                                  : <NavLink style={{color: 'white', textDecoration: 'none'}} to="/login">

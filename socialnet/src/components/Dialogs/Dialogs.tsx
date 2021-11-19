@@ -28,8 +28,6 @@ export const Dialogs = (props:DialogsPagePropsType) => {
     }
 
     const s = useStyles()
-    console.log(props.isAuth)
-    if (props.isAuth === false) return <Redirect to={"/login"} />
     return (
         <div>
             <Typography variant="h6" >Friends</Typography>

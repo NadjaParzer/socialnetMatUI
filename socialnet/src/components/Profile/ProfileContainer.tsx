@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { Redirect, RouteComponentProps, withRouter } from 'react-router';
+import { withAuthRedirect } from '../../HOC/withAuthRedirect';
 import { addPost,updateNewText, getUserProfileThunk } from '../../redux/profile-reducer';
 import { AppStateType } from '../../redux/redux-store';
 import { PostType } from './MyPosts/MyPosts';
@@ -34,7 +35,6 @@ class ProfileAPI extends React.Component<CommonPropsType> {
   }
 
   render() {
-    if (this.props.isAuth === false) return <Redirect to={"/login"} />
     return (
       <>
         <Profile {...this.props} profile={this.props.profile}/>
@@ -51,10 +51,12 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     isAuth: state.auth.isAuth
   } 
 }
-
+// withRouter - для того, чтобы сохранялось id выбранного пользователя, аналог location в хуках
+// закидываются данные из url (id)
+// добавляются в пропсы объекты match (совпадение урла с роутерами), location, history
 let WithURLdataContainer = withRouter(ProfileAPI)
-export const ProfileContainer = connect<MapStatePropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
+export const ProfileContainer = withAuthRedirect(connect<MapStatePropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
   addPost,
   updateNewText,
   getUserProfileThunk
-})(WithURLdataContainer)
+})(WithURLdataContainer))

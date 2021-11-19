@@ -34,11 +34,13 @@ const App:React.FC<AppType> = (props) => {
             <Divider orientation="vertical" flexItem />
           </Grid>
           <Grid item xs={10}>
+            {/* // /: - данные после добавляются в params в match в пропсах у компoненты */}
               <Route path="/profile/:userId?" render={()=> <ProfileContainer />}/>
               <Route path="/dialogs" render={()=> <DialogsContainer />}/> 
               <Route path="/charts" render={()=> <LineChart/>}/> 
               <Route path="/users" render={()=> <UsersContainer/>}/>
               <Route path="/login" render={()=> <Login />}/>
+              <Route path="/settings" render={()=> <LineChart/>}/>
           </Grid>
         </Grid>
       </Container>

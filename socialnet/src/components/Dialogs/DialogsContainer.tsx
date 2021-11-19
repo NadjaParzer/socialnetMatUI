@@ -4,6 +4,7 @@ import { Dialogs } from "./Dialogs";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { AppStateType } from "../../redux/redux-store";
+import { withAuthRedirect } from "../../HOC/withAuthRedirect";
 
 function generate(element: React.ReactElement) {
     return [0, 1, 2].map((value) =>
@@ -44,4 +45,4 @@ let mapDispatchToProps = (dispatch:Dispatch): MapDispatchToPropsType => {
     onSendMessageClick: () => {dispatch(sendMessageActionCreator())}
   }
 }
-export const DialogsContainer = connect(mapStateToProps,mapDispatchToProps)(Dialogs)
+export const DialogsContainer = withAuthRedirect(connect(mapStateToProps,mapDispatchToProps)(Dialogs))

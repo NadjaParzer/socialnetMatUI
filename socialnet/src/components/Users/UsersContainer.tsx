@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withAuthRedirect } from "../../HOC/withAuthRedirect";
 import { AppStateType } from "../../redux/redux-store";
 import { follow, setCurrentPage, followThunk, unfollowThunk,  unfollow, UserType,getUsersThunkCreator, toggleisFollowing } from "../../redux/users-reducer";
 import  { UserClassAPIComponent} from "./UsersClassAPIContainer";
@@ -57,7 +58,7 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 // }
 // export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UserClassAPIComponent)
 
-export const UsersContainer = connect<MapStatePropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
+export const UsersContainer = withAuthRedirect(connect<MapStatePropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
   follow,
   unfollow,
   // setUsers,
@@ -68,4 +69,4 @@ export const UsersContainer = connect<MapStatePropsType, MapDispatchToPropsType,
   getUsersThunkCreator,
   followThunk,
   unfollowThunk
-})(UserClassAPIComponent)
+})(UserClassAPIComponent))
