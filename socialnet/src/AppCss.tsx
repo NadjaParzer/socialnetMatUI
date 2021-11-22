@@ -39,8 +39,8 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: "740px",
   },
   avatarLarge: {
-    width: theme.spacing(25),
-    height: theme.spacing(25),
+    width: theme.spacing(30),
+    height: theme.spacing(30),
   },
   newPost: {
     width: "99%",

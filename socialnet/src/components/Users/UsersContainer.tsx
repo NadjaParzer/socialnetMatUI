@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { compose } from "redux";
 import { withAuthRedirect } from "../../HOC/withAuthRedirect";
 import { AppStateType } from "../../redux/redux-store";
 import { follow, setCurrentPage, followThunk, unfollowThunk,  unfollow, UserType,getUsersThunkCreator, toggleisFollowing } from "../../redux/users-reducer";
@@ -58,15 +59,31 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 // }
 // export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UserClassAPIComponent)
 
-export const UsersContainer = withAuthRedirect(connect<MapStatePropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
-  follow,
-  unfollow,
-  // setUsers,
-  setCurrentPage,
-  // setUsersTotalCount,
-  // toggleIsFetching,
-  //toggleisFollowing,
-  getUsersThunkCreator,
-  followThunk,
-  unfollowThunk
-})(UserClassAPIComponent))
+// export const UsersContainer = withAuthRedirect(connect<MapStatePropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
+//   follow,
+//   unfollow,
+//   // setUsers,
+//   setCurrentPage,
+//   // setUsersTotalCount,
+//   // toggleIsFetching,
+//   //toggleisFollowing,
+//   getUsersThunkCreator,
+//   followThunk,
+//   unfollowThunk
+// })(UserClassAPIComponent))
+
+export const UsersContainer = compose<React.ComponentType>(
+  withAuthRedirect,
+  connect<MapStatePropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
+    follow,
+    unfollow,
+    // setUsers,
+    setCurrentPage,
+    // setUsersTotalCount,
+    // toggleIsFetching,
+    //toggleisFollowing,
+    getUsersThunkCreator,
+    followThunk,
+    unfollowThunk
+  })
+)(UserClassAPIComponent)

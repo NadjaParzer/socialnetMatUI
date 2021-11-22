@@ -1,7 +1,7 @@
 import React from "react";
 import { DialogsPageType, sendMessageActionCreator, updateNewMessageTextActionCreator } from "../../redux/dialogs-reducer";
 import { Dialogs } from "./Dialogs";
-import { Dispatch } from "redux";
+import { compose, Dispatch } from "redux";
 import { connect } from "react-redux";
 import { AppStateType } from "../../redux/redux-store";
 import { withAuthRedirect } from "../../HOC/withAuthRedirect";
@@ -45,4 +45,10 @@ let mapDispatchToProps = (dispatch:Dispatch): MapDispatchToPropsType => {
     onSendMessageClick: () => {dispatch(sendMessageActionCreator())}
   }
 }
-export const DialogsContainer = withAuthRedirect(connect(mapStateToProps,mapDispatchToProps)(Dialogs))
+
+export const DialogsContainer = compose<React.ComponentType>(
+  withAuthRedirect,
+  connect(mapStateToProps,mapDispatchToProps)
+)(Dialogs)
+
+//export const DialogsContainer = withAuthRedirect(connect(mapStateToProps,mapDispatchToProps)(Dialogs))
