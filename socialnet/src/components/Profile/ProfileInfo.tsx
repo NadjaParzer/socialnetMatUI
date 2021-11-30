@@ -2,7 +2,7 @@ import React from 'react';
 import { Avatar, Button, CircularProgress, Container, Grid, Typography } from "@material-ui/core";
 import {useStyles} from '../../AppCss';
 import getInitials from '../../utils/getInitials';
-import { ProfileStatus } from './ProfileStatus';
+import ProfileStatus from './ProfileStatus';
 
 type ProfileInfoPropsType = {
     profile: any

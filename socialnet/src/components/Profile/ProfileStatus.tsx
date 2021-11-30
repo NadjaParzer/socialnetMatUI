@@ -6,6 +6,23 @@ type ProfileStatusType = {
   status: string
 }
 
-export const ProfileStatus = (props: ProfileStatusType) => {
-  return <Typography>{props.status}</Typography>
+class ProfileStatus extends React.Component<ProfileStatusType> {
+  state = {
+    editmode: false
+  }
+  enterStatus () {}
+  render () {
+    return (
+    <div>
+      {!this.state.editmode && 
+      <span onDoubleClick={enterStatus}><Typography >{this.props.status}</Typography></span>
+      
+      }
+      {this.state.editmode && 
+      <input value={this.props.status}></input>
+      }
+    </div>
+  )
+  }
 }
+export default ProfileStatus
